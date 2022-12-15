@@ -16,4 +16,4 @@ Informix BDE to PostgreSQL converter. A reimplementation of the original
 Optional:
 
 1. Install pre-commit hooks:
-   `pre-commit install --hook-type=pre-commit --overwrite`
+   `pre-commit install --hook-type=commit-msg --hook-type=pre-commit --overwrite`
