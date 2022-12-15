@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "bde-processor"
+version = "0.1.0"
+description = "Informix BDE to PostgreSQL converter"
+authors = [
+    "Victor Engmark <vengmark@linz.govt.nz>",
+]
+license = "MIT"
+readme = "README.md"
+packages = [{include = "bde_processor"}]
+homepage = "https://github.com/linz/bde-processor"
+repository = "https://github.com/linz/bde-processor"
+keywords = [
+    "Bulk Data Export",
+    "Informix",
+    "PostgreSQL",
+    "Toitū Te Whenua Land Information New Zealand",
+]
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Intended Audience :: End Users/Desktop",
+    "Natural Language :: English",
+    "Operating System :: POSIX",
+    "Topic :: Database",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+[tool.poetry.dependencies]
+python = "~3.10"
+
+[tool.poetry.group.dev.dependencies]
+pre-commit = "*"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

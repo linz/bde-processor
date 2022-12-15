@@ -1,0 +1,62 @@
+name: Pull request checks
+on:
+  pull_request:
+    types: [opened, reopened, synchronize]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3.1.0
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3.5.1
+        with:
+          node-version-file: ".nvmrc"
+          registry-url: https://registry.npmjs.org
+
+      - id: python
+        name: Install Python
+        uses: actions/setup-python@v4.3.1
+        with:
+          python-version-file: ".python-version"
+
+      - name: Cache pip
+        uses: actions/cache@v3.0.11
+        with:
+          path: ~/.cache/pip
+          key:
+            ${{ runner.os }}-pip-${{ secrets.CACHE_SEED }}-${{
+            steps.python.outputs.python-version }}-${{
+            hashFiles('./poetry.lock') }}
+          restore-keys:
+            ${{ runner.os }}-pip-${{ secrets.CACHE_SEED }}-${{
+            steps.python.outputs.python-version }}-
+
+      - name: Install Python package manager
+        run: pip install poetry
+
+      - name: Install Python dependencies
+        run: poetry install --no-root
+
+      - name: Run pre-commit hooks
+        run: poetry run pre-commit run --all-files
+
+  finalise:
+    name: Finalise pull request workflow
+    if: always()
+    needs:
+      - lint
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Decide whether the needed jobs succeeded or failed
+        uses: re-actors/alls-green@v1.2.2
+        with:
+          jobs: ${{ toJSON(needs) }}
