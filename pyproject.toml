@@ -29,6 +29,7 @@ classifiers = [
 python = "~3.10"
 
 [tool.poetry.group.dev.dependencies]
+gitlint = "*"
 pre-commit = "*"
 
 [build-system]

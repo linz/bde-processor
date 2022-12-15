@@ -1,0 +1,16 @@
+[general]
+# Hard fail when the target commit range is empty. Note that gitlint will
+# already fail by default on invalid commit ranges. This option is specifically
+# to tell gitlint to fail on *valid but empty* commit ranges.
+# Disabled by default.
+fail-without-commits = true
+
+# Ignore certain rules, you can reference them by their id or by their full name
+ignore = body-is-missing, body-max-line-length
+
+# Enable community contributed rules
+# See http://jorisroovers.github.io/gitlint/contrib_rules for details
+contrib = contrib-title-conventional-commits
+
+[title-max-length]
+line-length = 72
