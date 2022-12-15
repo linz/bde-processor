@@ -47,6 +47,11 @@ jobs:
       - name: Install Python dependencies
         run: poetry install --no-root
 
+      - name: Check all commit messages
+        run:
+          poetry run gitlint --commits origin/${{ github.base_ref }}..${{
+          github.event.pull_request.head.sha }}
+
       - name: Run pre-commit hooks
         run: poetry run pre-commit run --all-files
 
