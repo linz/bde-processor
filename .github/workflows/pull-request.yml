@@ -30,7 +30,7 @@ jobs:
           python-version-file: ".python-version"
 
       - name: Cache pip
-        uses: actions/cache@v4.2.1
+        uses: actions/cache@v4.2.2
         with:
           path: ~/.cache/pip
           key:
